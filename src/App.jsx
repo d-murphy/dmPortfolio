@@ -1,4 +1,5 @@
 import React from 'react';
+import {Container, Grid, Paper} from '@material-ui/core';
 
 class App extends React.Component {
     constructor() {
@@ -30,9 +31,18 @@ class App extends React.Component {
 
    render() {
       return (
-         <div>
-            <Profile personalInfo={this.state.personalInfo} />
-         </div>
+         <Container maxWidth="lg">
+           <Grid container direction="row" justify="center" alignItems="flex-start" spacing={1}>
+             <Grid item xs={4}>
+               <Paper elevation={0}>
+                 <Profile personalInfo={this.state.personalInfo} />
+               </Paper>
+             </Grid>
+             <Grid item xs={8}>
+               <PortItems />
+             </Grid>
+           </Grid>
+         </Container>
       );
    }
 }
@@ -50,6 +60,17 @@ class Profile extends React.Component {
         )
     }
 }
+
+class PortItems extends React.Component {
+    render() {
+        return(
+            <div>
+                <h3>Placeholder text</h3>
+             </div>
+        )
+    }
+}
+
 
 
 export default App;
