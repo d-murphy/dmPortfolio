@@ -1,5 +1,5 @@
 import React from 'react';
-import {Container, Grid, Paper} from '@material-ui/core';
+import {Container, Grid, Paper, Card} from '@material-ui/core';
 
 class App extends React.Component {
     constructor() {
@@ -64,9 +64,18 @@ class Profile extends React.Component {
 class PortItems extends React.Component {
     render() {
         return(
-            <div>
-                <h3>Placeholder text</h3>
-             </div>
+            <Grid container  direction="row" justify="center" alignItems="flex-start" spacing={1} >
+                <Grid item xs={4}>
+                  <Card>
+                    <h3>Placeholder text</h3>
+                  </Card>
+                </Grid>
+                <Grid item xs={4}>
+                  <Card>
+                    <h3>Something else</h3>
+                  </Card>
+                </Grid>
+            </Grid> 
         )
     }
 }
