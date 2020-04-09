@@ -1,5 +1,8 @@
 import React from 'react';
-import {Typography, Container, Grid, Paper, Card, AppBar, Tabs, Tab} from '@material-ui/core';
+import {Typography, Container, Grid, Paper, Card, CardContent, Link, createMuiTheme, MuiThemeProvider, Avatar} from '@material-ui/core';
+import red from 'material-ui/colors/red';
+import blue from 'material-ui/colors/blue';
+import { makeStyles } from '@material-ui/core/styles';
 
 class App extends React.Component {
     constructor() {
@@ -7,7 +10,6 @@ class App extends React.Component {
         this.state = {
             personalInfo: {
                 name: "Dan Murphy",
-                email: "Murphy.Dans@gmail.com",
                 imageLoc: "",
                 about: "DM has a varied educational background with diverse interests and abilities.  The portfolio draws together some projects he has worked on."
             },
@@ -30,40 +32,103 @@ class App extends React.Component {
     }
 
    render() {
+     const theme = createMuiTheme({
+       typography: {
+         htmlFontSize: 10,
+         fontFamily: [
+           'Arial',
+           'Helvetica',
+           'sans-serif'
+         ].join(','),
+         palette: {
+           primary: blue,
+           secondary: red
+         }
+       }
+     });
       return (
-         <Container maxWidth="lg">
-           <Grid container direction="row" justify="center" alignItems="flex-start" spacing={1}>
+        <MuiThemeProvider theme={theme}>
+         <Container maxWidth="xl" >
+           <Grid container direction="row" justify="center" alignItems="stretch" spacing={2}>
              <Grid item xs={4}>
                <Paper elevation={0}>
-                 <Profile personalInfo={this.state.personalInfo} />
+                 <Profile personalInfo={this.state.personalInfo} theme={theme}/>
                </Paper>
              </Grid>
-             <Grid item xs={8}>
-               <AppBar position="static">
-                 <Tabs>
-                   <Tab label="item 1" />
-                   <Tab label="item 2" />
-
-                 </Tabs>
-               </AppBar>
+             <Grid item xs={8} container >
+               <Paper>
+                 <Grid item xs={6}>
+                  <Typography>
+                    <Link>Projects</Link>
+                  </Typography>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography>
+                    <Link>Resume</Link>
+                  </Typography>
+                </Grid>
+                </Paper>
+               
                <FilteredPortItems items = {this.state.projectList}/>
              </Grid>
            </Grid>
          </Container>
+        </MuiThemeProvider>
       );
    }
+}
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    '& > *': {
+      margin: theme.spacing(1),
+    },
+  },
+  large: {
+    width: theme.spacing(15),
+    height: theme.spacing(15),
+  },
+}));
+
+const ImageAvatar = () => {
+  const classes = useStyles();
+
+  return (
+    <div className={classes.root}>
+      <Avatar 
+        src={require("./static/DMpicture.jpg")} alt="Dan Murphy picture"
+        className={classes.large}
+      />
+    </div>
+  );
 }
 
 class Profile extends React.Component {
     render() {
         return(
-            <div>
-                {this.props.personalInfo.name}
-                <br />
-                {this.props.personalInfo.email}
-                <br />
-                {this.props.personalInfo.about}
-            </div>
+            <Card >
+              <CardContent>
+                <Grid container alignItems="center" justify="center" spacing={4}>
+                  <Grid item >
+                    <Typography variant="h4">
+                      {this.props.personalInfo.name}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={4} >
+                    <ImageAvatar />
+                  </Grid>
+                </Grid>
+                <Grid container direction="column" spacing={5}>
+                  <Grid item></Grid>
+                  <Grid item>
+                    <Typography variant="body2" align="center">
+                      {this.props.personalInfo.about}
+                    </Typography>
+                  </Grid>
+                </Grid>
+              </CardContent>
+            </Card>
         )
     }
 }
@@ -72,7 +137,7 @@ class FilteredPortItems extends React.Component {
   render() {
     console.log(this.props.items[0]);
     return(
-    <Grid container  direction="row" justify="center" alignItems="flex-start" spacing={1} >
+    <Grid container  direction="row" justify="center" alignItems="stretch" spacing={2} >
       <PortItem item={this.props.items[0]}/>
       <PortItem item={this.props.items[1]}/>
       <PortItem item={this.props.items[2]}/>
@@ -98,13 +163,17 @@ class PortItem extends React.Component {
     render() {
         console.log(this.props.item.projectName)
         return(
-                <Grid item xs={4}>
+                <Grid item xs={6}>
                   <Card >
-                    <p>{this.props.item.projectName}</p>
-                    <p>{this.props.item.task}</p>
-                    <p>{this.props.item.tech}</p>
-                    <p>{this.props.item.description}</p>
-                    <p>{this.props.item.techDesc}</p>
+                    <Typography variant="h6">
+                      {this.props.item.projectName}
+                    </Typography>
+                    <Typography variant="overline">
+                      {this.props.item.task}
+                    </Typography>
+                    <Typography variant="body2">
+                      {this.props.item.description}
+                    </Typography>
                   </Card>
                 </Grid>
         )
