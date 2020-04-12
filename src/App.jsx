@@ -2,7 +2,22 @@ import React from 'react';
 import {Typography, Container, Grid, Paper, Card, CardContent, Link, createMuiTheme, MuiThemeProvider, Avatar} from '@material-ui/core';
 import red from 'material-ui/colors/red';
 import blue from 'material-ui/colors/blue';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, styled } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+    '& > *': {
+      margin: theme.spacing(1),
+    },
+  },
+  large: {
+    width: theme.spacing(15),
+    height: theme.spacing(15),
+  }
+}));
+
+
 
 class App extends React.Component {
     constructor() {
@@ -32,9 +47,10 @@ class App extends React.Component {
     }
 
    render() {
+
      const theme = createMuiTheme({
        typography: {
-         htmlFontSize: 10,
+         htmlFontSize: 12,
          fontFamily: [
            'Arial',
            'Helvetica',
@@ -55,21 +71,34 @@ class App extends React.Component {
                  <Profile personalInfo={this.state.personalInfo} theme={theme}/>
                </Paper>
              </Grid>
-             <Grid item xs={8} container >
-               <Paper>
-                 <Grid item xs={6}>
-                  <Typography>
-                    <Link>Projects</Link>
-                  </Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography>
-                    <Link>Resume</Link>
-                  </Typography>
-                </Grid>
-                </Paper>
+             <Grid item xs={8} container>
+               <Grid item xs={12} container direction="row" justify="center" alignItems="stretch" spacing={2}>
+                 
+                   <Grid item xs={12} >
+                    <NavPaper>
+                    <Typography align="center" >
+                      <Link>Projects</Link> | <Link>Resume</Link> | <Link>Resume</Link>
+                    </Typography>
+                    </NavPaper>
+                   </Grid>
+                
                
-               <FilteredPortItems items = {this.state.projectList}/>
+                    <PortItem item={this.state.projectList[0]}/>
+                    <PortItem item={this.state.projectList[1]}/>
+                    <PortItem item={this.state.projectList[2]}/>
+                    <PortItem item={this.state.projectList[3]}/>
+                    <PortItem item={this.state.projectList[4]}/>
+                    <PortItem item={this.state.projectList[5]}/>
+                    <PortItem item={this.state.projectList[6]}/>
+                    <PortItem item={this.state.projectList[7]}/>
+                    <PortItem item={this.state.projectList[8]}/>
+                    <PortItem item={this.state.projectList[9]}/>
+                    <PortItem item={this.state.projectList[10]}/>
+                    <PortItem item={this.state.projectList[11]}/>
+                    <PortItem item={this.state.projectList[12]}/>
+                    <PortItem item={this.state.projectList[13]}/>
+               </Grid>
+
              </Grid>
            </Grid>
          </Container>
@@ -78,18 +107,6 @@ class App extends React.Component {
    }
 }
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    '& > *': {
-      margin: theme.spacing(1),
-    },
-  },
-  large: {
-    width: theme.spacing(15),
-    height: theme.spacing(15),
-  },
-}));
 
 const ImageAvatar = () => {
   const classes = useStyles();
@@ -103,6 +120,10 @@ const ImageAvatar = () => {
     </div>
   );
 }
+
+const NavPaper =styled(Paper)({
+  padding: '20px'
+});
 
 class Profile extends React.Component {
     render() {
@@ -136,35 +157,21 @@ class Profile extends React.Component {
 class FilteredPortItems extends React.Component {
   render() {
     console.log(this.props.items[0]);
-    return(
-    <Grid container  direction="row" justify="center" alignItems="stretch" spacing={2} >
-      <PortItem item={this.props.items[0]}/>
-      <PortItem item={this.props.items[1]}/>
-      <PortItem item={this.props.items[2]}/>
-      <PortItem item={this.props.items[3]}/>
-      <PortItem item={this.props.items[4]}/>
-      <PortItem item={this.props.items[5]}/>
-      <PortItem item={this.props.items[6]}/>
-      <PortItem item={this.props.items[7]}/>
-      <PortItem item={this.props.items[8]}/>
-      <PortItem item={this.props.items[9]}/>
-      <PortItem item={this.props.items[10]}/>
-      <PortItem item={this.props.items[11]}/>
-      <PortItem item={this.props.items[12]}/>
-      <PortItem item={this.props.items[13]}/>
-
-    </Grid>
-    )
+    return({});
     
   }
 }
+
+const PortItemCard =styled(Card)({
+  padding: '10px'
+});
 
 class PortItem extends React.Component {
     render() {
         console.log(this.props.item.projectName)
         return(
-                <Grid item xs={6}>
-                  <Card >
+                <Grid item xs={6} >
+                  <PortItemCard >
                     <Typography variant="h6">
                       {this.props.item.projectName}
                     </Typography>
@@ -174,7 +181,7 @@ class PortItem extends React.Component {
                     <Typography variant="body2">
                       {this.props.item.description}
                     </Typography>
-                  </Card>
+                  </PortItemCard>
                 </Grid>
         )
     }
