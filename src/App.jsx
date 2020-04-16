@@ -1,23 +1,15 @@
 import React from 'react';
-import {Typography, Container, Grid, Paper, Card, CardContent, Link, createMuiTheme, MuiThemeProvider, Avatar} from '@material-ui/core';
+import {Typography, Container, Grid, Paper, MuiThemeProvider, CssBaseline} from '@material-ui/core';
 import red from 'material-ui/colors/red';
-import blue from 'material-ui/colors/blue';
-import { makeStyles, styled } from '@material-ui/core/styles';
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    '& > *': {
-      margin: theme.spacing(1),
-    },
-  },
-  large: {
-    width: theme.spacing(15),
-    height: theme.spacing(15),
-  }
-}));
+import { styled, createMuiTheme } from '@material-ui/core/styles';
+import PortItem from './components/PortItem'
+import Profile from './components/Profile'
+import Nav from './components/Nav'
 
 
+const PaddedContainer =styled(Container)({
+  padding: '10px'
+});
 
 class App extends React.Component {
     constructor() {
@@ -25,7 +17,6 @@ class App extends React.Component {
         this.state = {
             personalInfo: {
                 name: "Dan Murphy",
-                imageLoc: "",
                 about: "DM has a varied educational background with diverse interests and abilities.  The portfolio draws together some projects he has worked on."
             },
             projectList: [
@@ -49,145 +40,73 @@ class App extends React.Component {
    render() {
 
      const theme = createMuiTheme({
-       typography: {
-         htmlFontSize: 12,
+      palette: {
+        primary: {main: "#51422C"},
+        secondary:  red, 
+        background: {
+          default: "#eef2f3"
+
+        }
+      },
+      typography: {
+         htmlFontSize: 14,
          fontFamily: [
            'Arial',
            'Helvetica',
            'sans-serif'
-         ].join(','),
-         palette: {
-           primary: blue,
-           secondary: red
-         }
+         ].join(',')
        }
      });
       return (
         <MuiThemeProvider theme={theme}>
-         <Container maxWidth="xl" >
-           <Grid container direction="row" justify="center" alignItems="stretch" spacing={2}>
+         <CssBaseline />
+         <PaddedContainer maxWidth="xl" >
+           <Grid container spacing={2}>
              <Grid item xs={4}>
-               <Paper elevation={0}>
-                 <Profile personalInfo={this.state.personalInfo} theme={theme}/>
-               </Paper>
+                 <Profile personalInfo={this.state.personalInfo} />
              </Grid>
              <Grid item xs={8} container>
-               <Grid item xs={12} container direction="row" justify="center" alignItems="stretch" spacing={2}>
+               <NavPaper>
+               <Grid item container direction="row" justify="space-evenly"  spacing={5}>
                  
-                   <Grid item xs={12} >
-                    <NavPaper>
-                    <Typography align="center" >
-                      <Link>Projects</Link> | <Link>Resume</Link> | <Link>Resume</Link>
-                    </Typography>
-                    </NavPaper>
+                   <Grid item xs={12}  >
+                     <Typography align="center"><Nav /></Typography>
                    </Grid>
-                
-               
-                    <PortItem item={this.state.projectList[0]}/>
-                    <PortItem item={this.state.projectList[1]}/>
-                    <PortItem item={this.state.projectList[2]}/>
-                    <PortItem item={this.state.projectList[3]}/>
-                    <PortItem item={this.state.projectList[4]}/>
-                    <PortItem item={this.state.projectList[5]}/>
-                    <PortItem item={this.state.projectList[6]}/>
-                    <PortItem item={this.state.projectList[7]}/>
-                    <PortItem item={this.state.projectList[8]}/>
-                    <PortItem item={this.state.projectList[9]}/>
-                    <PortItem item={this.state.projectList[10]}/>
-                    <PortItem item={this.state.projectList[11]}/>
-                    <PortItem item={this.state.projectList[12]}/>
-                    <PortItem item={this.state.projectList[13]}/>
+                        <PortItem item={this.state.projectList[0]}/>
+                        <PortItem item={this.state.projectList[1]}/>
+
+                      <PortItem item={this.state.projectList[2]}/>
+                      <PortItem item={this.state.projectList[3]}/>
+                      <PortItem item={this.state.projectList[4]}/>
+                      <PortItem item={this.state.projectList[5]}/>
+                      <PortItem item={this.state.projectList[6]}/>
+                      <PortItem item={this.state.projectList[7]}/>
+                      <PortItem item={this.state.projectList[8]}/>
+                      <PortItem item={this.state.projectList[9]}/>
+                      <PortItem item={this.state.projectList[10]}/>
+                      <PortItem item={this.state.projectList[11]}/>
+                      <PortItem item={this.state.projectList[12]}/>
+                      <PortItem item={this.state.projectList[13]}/>
+                    </Grid>
+
+                    
+               </NavPaper>
+                  
                </Grid>
 
              </Grid>
-           </Grid>
-         </Container>
+         </PaddedContainer>
         </MuiThemeProvider>
       );
    }
 }
 
 
-const ImageAvatar = () => {
-  const classes = useStyles();
-
-  return (
-    <div className={classes.root}>
-      <Avatar 
-        src={require("./static/DMpicture.jpg")} alt="Dan Murphy picture"
-        className={classes.large}
-      />
-    </div>
-  );
-}
 
 const NavPaper =styled(Paper)({
   padding: '20px'
 });
 
-class Profile extends React.Component {
-    render() {
-        return(
-            <Card >
-              <CardContent>
-                <Grid container alignItems="center" justify="center" spacing={4}>
-                  <Grid item >
-                    <Typography variant="h4">
-                      {this.props.personalInfo.name}
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={4} >
-                    <ImageAvatar />
-                  </Grid>
-                </Grid>
-                <Grid container direction="column" spacing={5}>
-                  <Grid item></Grid>
-                  <Grid item>
-                    <Typography variant="body2" align="center">
-                      {this.props.personalInfo.about}
-                    </Typography>
-                  </Grid>
-                </Grid>
-              </CardContent>
-            </Card>
-        )
-    }
-}
-
-class FilteredPortItems extends React.Component {
-  render() {
-    console.log(this.props.items[0]);
-    return({});
-    
-  }
-}
-
-const PortItemCard =styled(Card)({
-  padding: '10px'
-});
-
-class PortItem extends React.Component {
-    render() {
-        console.log(this.props.item.projectName)
-        return(
-                <Grid item xs={6} >
-                  <PortItemCard >
-                    <Typography variant="h6">
-                      {this.props.item.projectName}
-                    </Typography>
-                    <Typography variant="overline">
-                      {this.props.item.task}
-                    </Typography>
-                    <Typography variant="body2">
-                      {this.props.item.description}
-                    </Typography>
-                  </PortItemCard>
-                </Grid>
-        )
-    }
-}
-
 
 
 export default App;
- 
