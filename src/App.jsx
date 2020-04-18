@@ -2,9 +2,9 @@ import React from 'react';
 import {Typography, Container, Grid, Paper, MuiThemeProvider, CssBaseline} from '@material-ui/core';
 import red from 'material-ui/colors/red';
 import { styled, createMuiTheme } from '@material-ui/core/styles';
-import PortItem from './components/PortItem'
 import Profile from './components/Profile'
 import Nav from './components/Nav'
+import PortPage from './components/PortPage'
 
 
 const PaddedContainer =styled(Container)({
@@ -15,6 +15,7 @@ class App extends React.Component {
     constructor() {
         super();
         this.state = {
+            pageDisplayed: "resume",
             personalInfo: {
                 name: "Dan Murphy",
                 about: "DM has a varied educational background with diverse interests and abilities.  The portfolio draws together some projects he has worked on."
@@ -35,7 +36,15 @@ class App extends React.Component {
               { projectName: 'Excel Templates - PSEG Long Island', task: 'Data Manipulation', tech: 'Excel', description: 'Joining and modifying data exports to meet routine reporting needs', techDesc: 'Advanced excel formulas to maniuplate raw exports into presentable reports', sort: '13'},
               { projectName: 'Excel Training', task: 'Training', tech: 'Excel', description: 'Trainings for all level at West Islip Library and local businesses', techDesc: '', sort: '14'},            ]
         }
+
+        this.displayProjects = this.displayProjects.bind(this);
+
     }
+
+    displayProjects() {
+      this.setState({pageDisplayed: "projects"});
+    }
+
 
    render() {
 
@@ -57,6 +66,15 @@ class App extends React.Component {
          ].join(',')
        }
      });
+
+     const displayStatus = this.state.pageDisplayed;
+     let pageDisplayed;
+     if(displayStatus === "projects") {
+      pageDisplayed = <PortPage projectList={this.state.projectList} />
+     } else {
+       pageDisplayed = <Nav />
+     }
+
       return (
         <MuiThemeProvider theme={theme}>
          <CssBaseline />
@@ -70,23 +88,12 @@ class App extends React.Component {
                <Grid item container direction="row" justify="space-evenly"  spacing={5}>
                  
                    <Grid item xs={12}  >
-                     <Typography align="center"><Nav /></Typography>
+                     <Typography align="center">
+                       <Nav displayProjects={this.displayProjects} />
+                     </Typography>
                    </Grid>
-                        <PortItem item={this.state.projectList[0]}/>
-                        <PortItem item={this.state.projectList[1]}/>
 
-                      <PortItem item={this.state.projectList[2]}/>
-                      <PortItem item={this.state.projectList[3]}/>
-                      <PortItem item={this.state.projectList[4]}/>
-                      <PortItem item={this.state.projectList[5]}/>
-                      <PortItem item={this.state.projectList[6]}/>
-                      <PortItem item={this.state.projectList[7]}/>
-                      <PortItem item={this.state.projectList[8]}/>
-                      <PortItem item={this.state.projectList[9]}/>
-                      <PortItem item={this.state.projectList[10]}/>
-                      <PortItem item={this.state.projectList[11]}/>
-                      <PortItem item={this.state.projectList[12]}/>
-                      <PortItem item={this.state.projectList[13]}/>
+                    {pageDisplayed}
                     </Grid>
 
                     

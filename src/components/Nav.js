@@ -10,12 +10,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Nav() {
+export default function Nav(props) {
   const classes = useStyles()
 
   return (
     <div className={classes.root} >
-      <Button color="primary">Projects</Button>
+      <Button color="primary" onClick={props.displayProjects} >Projects</Button>
       <Button color="primary">Resume</Button>
       <Button color="primary">About</Button>
     </div>

@@ -10,7 +10,7 @@ const PortItemCard =styled(Card)({
   const StyledGrid =styled(Grid)({
     border: "solid #8c979c thin", 
     borderRadius: "4px",
-    margin: '10px'
+    margin: '10px', 
   });
 
 class PortItem extends React.Component {
